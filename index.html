@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>Kaito Inada's Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <h1><span>K</span>aito Inada's <br id="header_br">Portfolio</h1>
+            <ul>
+                <li><a href="#self-i">自己紹介</a></li>
+                <li><a href="#Implementation">実装サンプル</a></li>
+            </ul>
+            <div>
+                <button class="hamburger">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <p class="hamburger__text">menu</p>
+                </button>
+            </div>
+            
+            <nav class="header__nav p-nav" id="js-nav">
+                <table class="menu">
+                    <tr>
+                        <td id="Introduction_nav" class="menu_title" colspan="2">自己紹介</td>
+                        <td id="sample_nav" class="menu_title" colspan="2">実装サンプル</td>
+                    </tr>
+                    <tr class="sub_menu">
+                        <td></td>
+                        <td>
+                            <ul>
+                                <li>・<a href="#self-i">自己紹介文</a></li>
+                                <li>・<a href="#skill">スキル</a></li>
+                            </ul>
+                        </td>
+                        <td></td>
+                        <td>
+                            <ul>
+                                <li>・<a href="#gallery">画像ギャラリー</a></li>
+                                <li>・<a href="#task_anchor">訓練課題</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </nav>
+
+            <div class="clear"></div>
+        </header>
+        
+        <a href="#top" class="move_top">
+            <div id="arrow_top"></div>
+            <p>TOP</p>
+        </a>
+
+        <div class="top_img" id="top"></div>
+
+        <div class="container">
+            <div class="self-introduction">
+                <a id="self-i" class="anchor"></a>
+                <h2>自己紹介<br><span>Self Introduction</span></h2>
+                <p>私の名前は<span>稲田海斗</span>です。北海道札幌市出身で現在はディーキャリアITエキスパート札幌大通オフィスにて、2022年8月からプログラミング学習に取り組んでおります。<br>どうぞよろしくお願いいたします。</p>
+                <img src="./images/new_img01.jpg" alt="img01" width="640">
+                <div> 
+                    <div class="introduction_box">
+                        <a id="skill" class="anchor"></a>
+                        <h3>スキル<br><span>Skills</span></h3>
+                        <ul>
+                            <li>HTML/CSS</li>
+                            <li>JavaScript</li>
+                            <li>PHP/MySQL</li>
+                            <li>Python</li>
+                        </ul>
+                    </div>
+                    <div class="introduction_box">
+                        <a id="tool" class="anchor"></a>
+                        <h3>利用可能なツール<br><span>available_tool</span></h3>
+                        <ul>
+                            <li>Github</li>
+                            <li>Visual Studio Code</li>
+                            <li>slack</li>
+                            <li>FileZilla</li>
+                            <li>Redmine</li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <a id="gallery" class="anchor"></a>
+                <h3 class="info">趣味・好きなもの</h3>
+                <div class="sample-container">
+                    <div class="images">
+                        <div class="sample">
+                            <img src="./images/eiga.jpg" alt="映画館の画像">
+                            <h4>映画鑑賞</h4>
+                        </div>
+                        <p class="img-txt">家でサブスクで観たり、映画館には年6回くらい観に行く。好きな映画はシャッターアイランド、ダークナイトシリーズ、MEG ザ・モンスター。好きな俳優はジェイソンステイサム。</p>
+                    </div>
+                    <div class="images">
+                        <div class="sample">
+                            <img src="./images/keyboard.jpg" alt="キーボードの画像">
+                            <h4>ゲーム</h4>
+                        </div>
+                        <p class="img-txt">主にPCゲーム、ハクスラやローグライクのアクションゲームやクラフト系サバイバル、サンドボックスゲームが好き。特にお気に入りのゲームはテラリア、仁王、TheHunter:Call of the Wild</p>
+                    </div>
+                    <div class="images">
+                        <div class="sample">
+                            <img src="./images/craft.jpg" alt="クラフトベンチの画像">
+                            <h4>つくること</h4>
+                        </div>
+                        <p class="img-txt">欲しいものはとりあえず作り方を調べる、作れそうだったら自分で作ることが多いです、こだわりが強く自分好みのものが見つからないとジャンルは問わず自分で作ることが多いですが、大抵一回作ると満足してそれきりになりがちです。</p>
+                    </div>
+                    <div class="images">
+                        <div class="sample">
+                            <img src="./images/cafe.jpg" alt="コーヒーを淹れている画像">
+                            <h4>コーヒーを淹れる</h4>
+                        </div>
+                        <p class="img-txt">最初は淹れるのは好きで、味は好きではなかったけど飲んでるうちに美味しく飲めるようになった、安定して自分の好みの味を出すのが目標、今のお気に入りの淹れ方は30ｇの粉から150ml抽出しお湯で450mlまで割る淹れ方です。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="samples">
+                <div class="samples-top">
+                    <h2 id="Implementation">実装サンプル<br><span>Sample</span></h2>
+                </div>
+            </div>
+
+            <div class="completed_task">
+                <a id="task_anchor" class="anchor"></a>
+                <h3 class="info">訓練課題</h3>
+                <div class="task task_container">
+                    <h4>JavaScript:<span>簡易ピアノアプリ</span></h4>
+                    <a href=".././js/index.html" target="_blank" rel="noopener noreferrer">
+                        <img src="./images/piano_top.png" alt="簡易ピアノアプリのTOP画像">
+                    </a>
+                    <details name="descriptions_js" class="details" open>
+                        <summary  class="details__summary"><span>仕様</span>&nbsp;&minus;</summary>
+                        <div class="details__content">
+                            ・音名が表示されるエリアがある<br>
+                            ・「ドレミファソラシ」に対応した鍵盤があり、鍵盤を押すと対応した音名が表示される（以下、音名が表示されることを演奏と表現する）<br>
+                            ・表示された音名は何にもしないと、１秒後に消える<br>
+                            ・「自動演奏」ボタンが押されると「チューリップの歌」「きらきら星」のどちらかがランダムに演奏されるされる<br>
+                            ・自動演奏時画面上部に演奏中の曲名が表示される<br>
+                            ・「自動演奏」ボタンは自動演奏中は「演奏中止」と表示され、自動演奏が終了すると表示が「自動演奏」に戻り、再度クリックすると最初から演奏が始まる<br>
+                            ・鍵盤下部のボタンで自動演奏時の演奏速度を変更することが出来る<br>
+                            ・自動演奏が終了すると、演奏速度は等倍に戻る<br>
+                            ・自動演奏中は鍵盤の機能が無効になる<br>
+                        </div>
+                    </details>
+                    <details name="descriptions_js" class="details">
+                        <summary  class="details__summary"><span>手順</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・自動演奏時の曲名を表示する部分を作成<br>
+                            ・音名が表示される部分を作成<br>
+                            ・鍵盤ボタンを作成<br>
+                            ・鍵盤を押すと対応した音名が表示される機能を作成<br>
+                            ・自動演奏ボタンを作成<br>
+                            ・演奏速度変更ボタン＆自動演奏中の演奏速度変更機能作成<br>
+                            ・現在の自動演奏速度表示部分作成<br>
+                            ・音名表示時背景に音階を表示する機能作成
+                        </div>
+                    </details>
+                    <details name="descriptions_js"  class="details">
+                        <summary class="details__summary"><span>工夫</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・音名が表示される際に、背景に表示される音名に対応した音符と五線譜が表示されるようにした<br>
+                            ・自動演奏時の速度を変更できるようにした
+                        </div>
+                    </details>
+                </div>
+
+                <div class="task task_container">
+                    <h4>PHP/MySQL:ECサイト</h4>
+                    <a href="https://portfolio.dc-itex.com/sapporoodori/0010/ec_site/index.php" target="_blank" rel="noopener noreferrer">
+                        <img src="./images/EC_site_top.png" alt="ECサイトのTOP画像">
+                    </a>
+                    <details name="descriptions_php" class="details" open>
+                        <summary class="details__summary"><span>仕様</span>&nbsp;&minus;</summary>
+                        <div class="details__content">
+                            ・ディレクトリ構造にMVCモデルが使用されている<br>
+                            ・管理用ユーザーでログインすると商品一覧ページにアクセスできる<br>
+                            ・全7ページで構成されている<br>
+                            &#09507;ログインページ（トップページ）：登録されたユーザーでログインを行う<br>
+                            &nbsp;&nbsp;&#09495;ログイン状態でアクセスした場合、商品一覧ページにリダイレクトされる<br>
+                            &#09507;ユーザー登録ページ：新規ユーザーの登録を行う<br>
+                            &nbsp;&nbsp;&#09495;ユーザー名を重複して登録することはできない<br>
+                            &#09507;商品管理ページ：販売する商品の追加、在庫数、値段の変更を行う<br>
+                            &#09507;商品一覧ページ：選択した商品のカートへの追加を行う<br>
+                            &#09507;ショッピングカートページ：カート内の商品の削除、個数変更、購入確定を行う<br>
+                            &#09507;購入完了ページ：完了した購入情報の表示が行われる<br>
+                            &#09495;マイページ（オリジナル機能）：購入情報の履歴の表示を行う<br>
+                            ・管理用ユーザーIDとパスワード<br>
+                            &#09495;id:ec_admin pass:ec_admin <br>
+                        </div>
+                    </details>
+                    <details name="descriptions_php" class="details">
+                        <summary class="details__summary"><span>手順</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・ログインページのhtmlを作成<br>
+                            ・他のページと共通する部分をテンプレート化<br>
+                            ・ユーザー登録ページのhtmlを作成<br>
+                            ・商品管理ページのhtmlを作成<br>
+                            ・ユーザー登録機能を作成<br>
+                            ・ログイン機能を作成<br>
+                            ・商品の登録、削除、個数変更、単価の変更機能を作成<br>
+                            ・商品一覧ページのhtmlを作成<br>
+                            ・ショッピングカートページのhtmlを作成<br>
+                            ・商品をカートに追加する機能を作成<br>
+                            ・カート内の商品の個数変更、カートから削除する機能を作成<br>
+                            ・購入完了ページのhtmlを作成<br>
+                            ・商品の購入処理をする機能を作成<br>
+                            ・マイページのhtmlを作成<br>
+                            ・購入処理時データベースに購入情報を保存する機能を作成<br>
+                            ・ログインしているユーザーの過去の購入情報を一覧表示、詳細を確認できる機能を作成<br>
+                        </div>
+                    </details>
+                    <details name="descriptions_php" class="details">
+                        <summary class="details__summary"><span>工夫</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・マイページからログイン状態のユーザーの、過去の購入記録を確認できる<br>
+                            ・シンプルなデザインを意識して作成した
+                        </div>
+                    </details>
+                </div>
+
+                <div class="task task_container">
+                    <h4>WordPress</h4>
+                    <a href="https://portfolio.dc-itex.com/sapporoodori/0010/wp/" target="_blank" rel="noopener noreferrer">
+                        <img src="./images/WordPress_image.png" alt="WordPressのサイトの画像">
+                    </a>
+                    <details name="descriptions_wp" class="details" open>
+                        <summary class="details__summary"><span>仕様</span>&nbsp;&minus;</summary>
+                        <div class="details__content">
+                            ・プレリリースを投稿できる<br>
+                            ・ブログを投稿できる<br>
+                            ・各ページにパンくずリストがある<br>
+                            ・お問い合わせメールを送れる<br>
+                            ・静的ファイルから作成
+                        </div>
+                    </details>
+                    <details name="descriptions_wp" class="details">
+                        <summary class="details__summary"><span>手順</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・静的ファイルをダウンロードする<br>
+                            ・テーマファイルを作成する<br>
+                            ・テーマファイルに静的ファイルに入っている、html以外のファイル、フォルダを入れる<br>
+                            ・残りのhtmlファイルを用いて、テンプレートを作成する<br>
+                            ・htmlファイルからヘッダーやフッターなどのphpファイルを作成する<br>
+                            ・リンクアドレスにテンプレートタグに置き換える<br>
+                            ・ヘッダー、フッターといった共通部分の作成<br>
+                            ・コンテンツ部分の作成<br>
+                            ・お知らせ一覧ページの作成<br>
+                            ・ブログ一覧ページの作成<br>
+                            ・詳細ページの作成<br>
+                            ・固定ページの共通部分を作成<br>
+                            ・サービス概要ページの作成<br>
+                            ・会社概要ページの作成<br>
+                            ・お問い合わせページの作成<br>
+                            ・Information部分の作成<br>
+                            ・アイキャッチ画像の設定<br>
+                            ・パンくずリストの作成<br>
+                            ・ページネーションの作成<br>
+                            ・プラグインをを使用しカスタムフィールドの設定を行う<br>
+                            ・プラグインを使用しお問い合わせフォームの作成<br>
+                        </div>
+                    </details>
+                    <details name="descriptions_wp" class="details">
+                        <summary class="details__summary"><span>工夫</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・上手くいかない部分があってもすぐにネットで調べずに自己解決できないか、
+                            コードを再確認し原因の特定をする作業を普段よりも意識して行った
+                        </div>
+                    </details>
+                </div>
+
+                <div class="task task_container">
+                    <h4>Python:ポモドーロタイマー</h4>
+                    <a href="https://github.com/KI1010/P_timer" target="_blank" rel="noopener noreferrer">
+                        <img src="./images/timer_github.png" alt="Pythonのアプリの画像">
+                    </a>
+                    <details name="descriptions_py" class="details" open>
+                        <summary class="details__summary"><span>仕様</span>&nbsp;&minus;</summary>
+                        <div class="details__content">
+                            ・作業時間と休憩時間のタイマー<br>
+                            ・タイマーの起動と終了時間を記録する機能<br>
+                            ・作業時間と休憩時間でログの色分けする機能<br>
+                            ・タイマーの通知方法を設定する方法<br>
+                            ・設定を別ウィンドウで表示する機能<br>
+                            ・アプリのインストール方法<br>
+                              1.上の画像をクリックしリンクからGitHubにアクセスしReleasesから最新のVerを選びtimer.exeをダウンロードします。<br>
+                              2.ダウンロードしたファイルを実行します<br>
+                              3.Windowsのセキュリティ警告が出た場合は「詳細情報」→「実行」をクリックしてください。
+                        </div>
+                    </details>
+                    <details name="descriptions_py" class="details">
+                        <summary class="details__summary"><span>手順</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・アプリの設計書の作り方を調べて作成する<br>
+                            ・工程表の作り方を調べて作成する<br>
+                            ・タイマー機能の作成<br>
+                            ・通知機能の作成<br>
+                            ・タイマーの繰り返し機能の作成<br>
+                            ・設定機能の作成<br>
+                            ・GUIのレイアウトの決定<br>
+                            ・タイマー開始、終了時間の記録機能の作成<br>
+                            ・設定をファイルで保存する機能の作成<br>
+                            ・ログデータの色分け機能の作成<br>
+                            ・色分け機能の設定機能の作成<br>
+                            ・設定のリセット機能の作成<br>
+                            ・通知音機能の作成<br>
+                            ・UI/UXの調整<br>
+                            ・エラーが出ないか確認<br>
+                            ・アプリを実行可能ファイルに変更する<br>
+                            ・完成
+                        </div>
+                    </details>
+                    <details name="descriptions_py" class="details">
+                        <summary class="details__summary"><span>工夫</span>&nbsp;&plus;</summary>
+                        <div class="details__content">
+                            ・設計書、工程表を作り作業の進捗状況を確認しながら工程表に則り作業を進めることが出来た<br>
+                            ・独学で0からPythonを学び完成させることが出来た
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Copyright © 2024 kaito inada</p>
+        </footer>
+
+        <script>
+            const hamburger = document.querySelector('.hamburger');
+            const headNav = document.querySelector('#js-nav');// #js-nav要素取得して変数に格納
+            hamburger.addEventListener("click",()=>{
+                if (hamburger.classList.contains("is-active")) {// is-activeクラスがついていたら
+                // ハンバーガーメニューのis-activeクラスを削除
+                hamburger.classList.remove('is-active');
+                hamburger.querySelector('.hamburger__text').textContent = 'menu';
+                headNav.classList.remove('is-active')
+                } else {//is-activeクラスがついていなかったら
+                // ハンバーガーメニューにis-activeクラスを追加
+                hamburger.classList.add('is-active');
+                hamburger.querySelector('.hamburger__text').textContent = 'close';
+                headNav.classList.add('is-active')
+                }
+            });
+            
+            headNav.addEventListener("click",()=>{
+                hamburger.classList.remove('is-active');
+                hamburger.querySelector('.hamburger__text').textContent = 'MENU';
+                headNav.classList.remove('is-active')
+            });
+
+            /*--detailsのコード--*/
+            document.addEventListener("DOMContentLoaded",()=>{
+                const details = document.querySelectorAll(".details");
+                details.forEach( element => {
+                    const summary = element.querySelector(".details__summary");
+                    const content = element.querySelector(".details__content");
+                    summary.addEventListener("click", e =>{
+                        e.preventDefault();
+                        if (element.open) {
+                            /*閉じるときのアニメーション*/
+                            summary.animate(
+                                {
+                                display:["block","block","inline-block"],
+                                width:["100%","10px","10px"],
+                                height:["10px","10px",summary.clientHeight + "px"]
+                                },{
+                                duration:500,
+                                pseudoElement:"::before"
+                                }
+                            );
+                            const close_text = content.animate(
+                                {
+                                    opacity:[1,0],
+                                    height:[content.offsetHeight + "px",0]
+                                },{
+                                    duration:500,
+                                    easing:"ease"
+                                }
+                            );
+                            close_text.onfinish=()=>{
+                                element.removeAttribute("open");
+                                summary.animate(
+                                    {paddingTop:["10px",0]},
+                                    {duration:500,easing:"ease"}
+                                );
+                            }
+                        } else {
+                            /*開くときのアニメーション*/
+                            element.setAttribute("open","true");
+                            const open_text = content.animate(
+                                {
+                                    opacity:[0,1],
+                                    height:[0,content.offsetHeight +"px"]
+                                },{
+                                    duration:500,
+                                    easing:"ease",
+                                    fill:"forwards"
+                                }
+                            );
+                            summary.animate(
+                                {
+                                    display:["inline-block","block","block"],
+                                    width:["10px","10px","100%"],
+                                    height:["100%","10px","10px"]
+                                },{
+                                    duration:500,
+                                    pseudoElement:"::before",
+                                }
+                            );
+                        }      
+                    });
+                    const switch_text = (display_status,summary)=>{
+                        var summary_text = summary.textContent;
+                        var sliced_text = summary_text.slice(0,2);
+                        if(display_status){
+                            summary.innerHTML ="<span>"+sliced_text+"</span>"+"&nbsp;&minus;";
+                        } else {
+                            summary.innerHTML="<span>"+sliced_text+"</span>"+"&nbsp;&plus;";
+                        }
+                    }
+                    element.addEventListener("toggle",()=>{
+                        switch_text(element.open,summary);
+                    })
+                });
+            })
+        </script>
+    </body>    
+</html>
