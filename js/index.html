@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>簡易ピアノアプリ</title>
+  <style>
+    * {
+      margin:  0px 0px;
+      padding: 0px 0px;
+    }
+    body {
+      text-align: center;
+      height: 100vh;
+      padding: 0 20%;
+    }
+    #subPanel {
+      background-color: rgb(96, 93, 93);
+      height: 10%;
+      line-height: 72px;
+      font-size: 20px;
+      color: white;
+    }
+    #autoplay {
+      height: 40px;
+      margin: 20px;
+      width: 100px;
+    }
+    #mainPanel {
+      margin: 0 150px;
+      text-align: center;
+      height: 30%;
+      line-height: 250px;
+      margin-bottom: 80px;
+      font-size: 50px;
+      background-image: url(staff_notation/staff_notation_none.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    #keyboard {
+      height: 20%;
+      width: 100%;
+      display: flex;
+      text-align: center;
+    }
+    .key {
+      background-color: white;
+      width: 20%;
+    }
+    .keyButton {
+      font-size: large;
+      font-weight: bold;
+    }
+    button {
+      width: 80%;
+      height: 80%;
+    }
+    .speed{
+      width: 60px;
+      height: 30px;
+      margin: 5px;
+      border-radius: 15px;
+      border: none;
+    }
+    #speed_indicator {
+      margin: 15px;
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div id="subPanel"></div>
+  <div><button type="button" id="autoplay">自動演奏</button></div>
+  <div id="mainPanel"> </div>
+  <div id="keyboard">
+    <div class="key"><button class="keyButton" id="C">ド</button></div>
+    <div class="key"><button class="keyButton" id="D">レ</button></div>
+    <div class="key"><button class="keyButton" id="E">ミ</button></div>
+    <div class="key"><button class="keyButton" id="F">ファ</button></div>
+    <div class="key"><button class="keyButton" id="G">ソ</button></div>
+    <div class="key"><button class="keyButton" id="A">ラ</button></div>
+    <div class="key"><button class="keyButton" id="B">シ</button></div>
+  </div>
+  <div>
+    <input type="button" value="0.2x"  class="speed" >
+    <input type="button" value="0.5x"  class="speed" >
+    <input type="button" value="1x"    class="speed" disabled >
+    <input type="button" value="2x"    class="speed" >
+    <input type="button" value="5x"    class="speed" >
+  </div>
+  <div id="speed_indicator">自動演奏は１倍速です</div>
+
+  <script>
+    const getDOMElements=()=>{
+      return{
+        autoplay  : document.getElementById("autoplay"),
+        mainPanel : document.getElementById("mainPanel"),
+        subPanel  : document.getElementById("subPanel"),
+        C  : document.getElementById("C"),
+        D  : document.getElementById("D"),
+        E  : document.getElementById("E"),
+        F  : document.getElementById("F"),
+        G  : document.getElementById("G"),
+        A  : document.getElementById("A"),
+        B  : document.getElementById("B"),
+        speedx02 : document.getElementsByClassName("speed")[0],
+        speedx05 : document.getElementsByClassName("speed")[1],
+        speedx1  : document.getElementsByClassName("speed")[2],
+        speedx2  : document.getElementsByClassName("speed")[3],
+        speedx5  : document.getElementsByClassName("speed")[4],
+        speed_indicator : document.getElementById("speed_indicator")
+      };
+    }
+    const elements = getDOMElements();
+    let automatic_playing_switching = 0 ;
+    let currentTime = 0;
+    let timerIds =[];
+    //表示リセット機能
+    let reset_count;
+    let show_reset = ()=>{
+      elements.mainPanel.textContent = " ";
+      elements.mainPanel.style.backgroundImage = "url("+'staff_notation/staff_notation_none.png'+")";
+    }
+    const reset_timer =()=>{
+      clearTimeout(reset_count);
+      reset_count = setTimeout(show_reset,1000);
+    }
+    //インジケーター
+    const indicator=(spdNum)=>{
+      elements.speed_indicator.textContent = "自動演奏は"+spdNum+"倍速です";
+    }
+    //背景画像切り替え
+    const backgroundImages={
+      "ド"  :'staff_notation/staff_notation_C.png',
+      "レ"  :'staff_notation/staff_notation_D.png',
+      "ミ"  :'staff_notation/staff_notation_E.png',
+      "ファ":'staff_notation/staff_notation_F.png',
+      "ソ"  :'staff_notation/staff_notation_G.png',
+      "ラ"  :'staff_notation/staff_notation_A.png',
+      "シ"  :'staff_notation/staff_notation_B.png'
+    };
+    const backgroundAuto=(BGimg)=>{
+      let image = backgroundImages[BGimg];
+      if(image){
+        elements.mainPanel.style.backgroundImage =  "url(" + image + ")";
+      }else{
+        elements.mainPanel.style.backgroundImage = "url(" + 'staff_notation/staff_notation_none.png' + ")";
+      }
+
+    };
+    //音名表示機能
+    const displayNote =(oto,note)=>{
+      elements.mainPanel.textContent =oto;
+      elements.mainPanel.style.backgroundImage = "url("+'staff_notation/staff_notation_'+note+'.png'+")";
+      reset_timer();
+    }
+    const notesMapping = {
+      "ド":"C",
+      "レ":"D",
+      "ミ":"E",
+      "ファ":"F",
+      "ソ":"G",
+      "ラ":"A",
+      "シ":"B"
+    };
+    const showNote=(oto)=>{
+      let note = notesMapping[oto];
+      if(note){
+        displayNote(oto,note);
+      }
+    }
+
+    //乱数生成
+    let randomNum = ()=>{
+      return Math.floor(Math.random()*100)+1;
+    }
+    //自動演奏機能
+    const AUTOPLAY=(nt,sp)=>{
+      for(let i = 0; i < nt.length; i++) {
+    let note = nt[i].doReMi;
+    let duration = nt[i].playLength;
+    let timeID= setTimeout(() => {
+        elements.mainPanel.textContent = note;
+        backgroundAuto(note);
+    }, currentTime);
+    currentTime += (duration*sp);
+    timerIds.push(timeID);
+    }
+    timeID=setTimeout(()=>{
+      endAutoPlay();
+    },currentTime);
+    timerIds.push(timeID);
+    }
+    //きらきら星 譜面
+    const star_note=[
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ラ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ラ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 2000, doReMi: "ソ"},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: ""},
+      {playLength: 2000, doReMi: "ド"},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 2000, doReMi: "レ"},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 2000, doReMi: "レ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ラ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ラ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 2000, doReMi: "ソ"},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ファ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: " "},
+      {playLength: 4000, doReMi: "ド"}
+    ]
+    //チューリップ 譜面
+    const tulip_note =[
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 1000, doReMi: "ミ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 1000, doReMi: "ミ"},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 1000, doReMi: "レ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 1000, doReMi: "ミ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 1000, doReMi: "ミ"},
+      {playLength: 500, doReMi: "ソ"},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: "ド"},
+      {playLength: 500, doReMi: "レ"},
+      {playLength: 500, doReMi: "ミ"},
+      {playLength: 1000, doReMi: "ド"},
+      {playLength: 250, doReMi: "ソ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ソ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ミ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ソ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ラ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ラ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 1000, doReMi: "ソ"},
+      {playLength: 250, doReMi: "ミ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "ミ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "レ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 250, doReMi: "レ"},
+      {playLength: 250, doReMi: " "},
+      {playLength: 4000, doReMi: "ド"},
+    ]
+    
+    //自動演奏を停止しデフォルトの状態に戻す
+    const endAutoPlay =()=>{
+      button_stop();
+      speedControlButton();
+      currentTime = 0;
+      automatic_playing_switching--;
+      elements.mainPanel.textContent = " ";
+      elements.subPanel.textContent = " ";
+      elements.autoplay.textContent = "自動演奏";
+      indicator("1");
+      speedControl=1;
+      elements.mainPanel.style.backgroundImage = "url("+'staff_notation/staff_notation_none.png'+")";
+    }
+    const randomPlay =(speedControl)=>{
+      let i = randomNum();
+      if(i%2==0){
+        AUTOPLAY(star_note,speedControl);
+        elements.subPanel.textContent = "自動演奏中です：きらきら星"; 
+      }else{
+        AUTOPLAY(tulip_note,speedControl);
+        elements.subPanel.textContent = "自動演奏中です：チューリップの歌";
+      }
+    }
+    //自動演奏ボタンを押したら動作
+    const button_stop=()=>{
+      if(automatic_playing_switching==0){
+        elements.C.setAttribute("disabled",true);
+        elements.D.setAttribute("disabled",true);
+        elements.E.setAttribute("disabled",true);
+        elements.F.setAttribute("disabled",true);
+        elements.G.setAttribute("disabled",true);
+        elements.A.setAttribute("disabled",true);
+        elements.B.setAttribute("disabled",true);
+      }else{
+        elements.C.removeAttribute("disabled");
+        elements.D.removeAttribute("disabled");
+        elements.E.removeAttribute("disabled");
+        elements.F.removeAttribute("disabled");
+        elements.G.removeAttribute("disabled");
+        elements.A.removeAttribute("disabled");
+        elements.B.removeAttribute("disabled");
+      }
+    }
+    const speedControlButton=()=>{
+      if(automatic_playing_switching==0){
+        elements.speedx02.setAttribute("disabled",true);
+        elements.speedx05.setAttribute("disabled",true);
+        elements.speedx1.setAttribute("disabled",true);
+        elements.speedx2.setAttribute("disabled",true);
+        elements.speedx5.setAttribute("disabled",true);
+      }else{
+        elements.speedx02.removeAttribute("disabled");
+        elements.speedx05.removeAttribute("disabled");
+        elements.speedx2.removeAttribute("disabled");
+        elements.speedx5.removeAttribute("disabled");
+        elements.speed1=500;
+        elements.speed2=250;
+      }
+    }
+    const change=(speedControl)=>{
+      if (automatic_playing_switching==0){
+        timerIds=[];
+        randomPlay(speedControl);
+        elements.autoplay.textContent = "演奏中止";
+        button_stop();
+        speedControlButton();
+        automatic_playing_switching++;
+      }else{
+       endAutoPlay()
+       for(let i=0;i<timerIds.length;i++){
+          clearTimeout(timerIds[i]);
+        }
+        timerIds=[];
+      }
+    };
+    //演奏速度変更
+    let speedControl = 1;
+    const changed_playing_speed=(playingSpeed)=>{
+      speedControl = playingSpeed;
+      elements.speedx02.removeAttribute("disabled");
+      elements.speedx05.removeAttribute("disabled");
+      elements.speedx1.removeAttribute("disabled");
+      elements.speedx2.removeAttribute("disabled");
+      elements.speedx5.removeAttribute("disabled");
+      switch(playingSpeed){
+        case 5:
+          elements.speedx02.setAttribute("disabled",true);
+          indicator("0.2");
+          break;
+        case 2:
+          elements.speedx05.setAttribute("disabled",true);
+          indicator("0.5");
+          break;
+        case 1:
+          elements.speedx1.setAttribute("disabled",true);
+          indicator("1");
+          break;
+        case 0.5:
+          elements.speedx2.setAttribute("disabled",true);
+          indicator("2");
+          break;
+        case 0.2:
+          elements.speedx5.setAttribute("disabled",true);
+          indicator("5");
+          break;
+      }
+    }
+    //クリックイベント
+    elements.C.addEventListener("click",()=>showNote("ド"));
+    elements.D.addEventListener("click",()=>showNote("レ"));
+    elements.E.addEventListener("click",()=>showNote("ミ"));
+    elements.F.addEventListener("click",()=>showNote("ファ"));
+    elements.G.addEventListener("click",()=>showNote("ソ"));
+    elements.A.addEventListener("click",()=>showNote("ラ"));
+    elements.B.addEventListener("click",()=>showNote("シ"));
+    elements.speedx02.addEventListener("click",()=>changed_playing_speed(5));
+    elements.speedx05.addEventListener("click",()=>changed_playing_speed(2));
+    elements.speedx1.addEventListener("click",()=>changed_playing_speed(1));
+    elements.speedx2.addEventListener("click",()=>changed_playing_speed(0.5));
+    elements.speedx5.addEventListener("click",()=>changed_playing_speed(0.2));
+    elements.autoplay.addEventListener("click",()=>change(speedControl));
+  </script>
+</body>
+</html>
